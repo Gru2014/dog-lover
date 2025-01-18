@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const base_url = import.meta.env.VITE_API_BASE_URL;
 
@@ -15,6 +16,7 @@ export const handleLogin = async ({
       { name, email },
       { withCredentials: true }
     );
+    Cookies.set("status", "authenticated");
   } catch (error) {
     console.log(error);
   }
@@ -29,6 +31,7 @@ export const handleLogout = async () => {
         withCredentials: true,
       }
     );
+    Cookies.remove("status");
   } catch (error) {
     console.log(error);
   }

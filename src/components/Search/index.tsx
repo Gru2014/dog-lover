@@ -3,6 +3,7 @@ import { FaPaw, FaSort } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { Breeds, Button, DogCard, Loading, MatchedDog, Pagenation } from "..";
+import Cookies from "js-cookie";
 import { Dog } from "../../utils/types";
 import {
   handleDogDetails,
@@ -25,6 +26,9 @@ const Search: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!Cookies.get("status")) {
+      navigate("/");
+    }
     setIsLoading(true);
     const fetchBreeds = async () => {
       try {
@@ -32,9 +36,7 @@ const Search: React.FC = () => {
         setBreeds(response);
         setIsLoading(false);
       } catch (error: any) {
-        if (error.status === 401) {
-          navigate("/");
-        }
+        console.log(error)
       }
     };
     fetchBreeds();
